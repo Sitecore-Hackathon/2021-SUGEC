@@ -1,0 +1,20 @@
+.collapse-button {
+  appearance: none;
+  background-color: color("teal");
+  border: 0;
+  color: color("white");
+  cursor: pointer;
+  height: rem(50px);
+  transition: background-color 0.2s ease-in-out;
+  width: rem(50px);
+
+  &:hover {
+    background-color: darken(color("teal"), 7);
+  }
+
+  svg {
+    fill: color("white");
+    height: rem(15px);
+    width: rem(15px);
+  }
+}

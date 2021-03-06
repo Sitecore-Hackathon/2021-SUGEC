@@ -1,0 +1,20 @@
+//Typography
+
+//Heading map
+$headings: (
+    (h1, 64px, 1em),
+    (h2, 48px, 1em),
+    (h3, 24px, 1em),
+    (h4, 22px, 1.5em),
+    (h5, 21px, 1.5em),
+    (h6, 18px, 1.5em)
+);
+
+@each $heading, $size, $line-height in $headings {
+  #{$heading} {
+    $remsize: $size / 16px;
+
+    font-size: $remsize * 1rem;
+    line-height: $line-height;
+  }
+}
