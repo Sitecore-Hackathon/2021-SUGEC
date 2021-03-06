@@ -1,0 +1,11 @@
+// sass-rem
+$rem-baseline: 16px;
+
+$mq-breakpoints: (
+  mobile: 320px,
+  tablet: 740px,
+  desktop: 980px,
+  wide: 1300px
+);
+
+$primary-font: "Roboto", sans-serif;

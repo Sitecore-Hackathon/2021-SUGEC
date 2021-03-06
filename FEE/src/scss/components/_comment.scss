@@ -1,0 +1,40 @@
+.comment {
+  background-color: color("white");
+  border-radius: rem(4px);
+  box-shadow: rem(0 2px 4px) color("gray4");
+  color: color("charcoal");
+  font-size: rem(16px);
+  margin-bottom: rem(10px);
+  padding: rem(10px);
+}
+
+.comment__header {
+  align-items: center;
+  border-bottom: solid 1px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: rem(5px);
+  padding: rem(5px 0);
+}
+
+.comment__user {
+  font-weight: 600;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comment__date {
+  color: color("gray4");
+  flex-shrink: 0;
+  font-size: rem(14px);
+  margin: rem(0 0 0 10px);
+}
+
+.comment__body {
+  font-size: rem(14px);
+  line-height: rem(18px);
+  margin: 0;
+  padding: rem(5px 0);
+}

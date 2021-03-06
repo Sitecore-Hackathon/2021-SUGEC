@@ -1,0 +1,15 @@
+//Main entry
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+//Core
+@import "../../node_modules/normalize.css/normalize", "core/colorpalette", "../../node_modules/@verndale/color-palette/colors", "core/variables", "../../node_modules/sass-mq/mq", "../../node_modules/sass-rem/rem";
+
+// Globals
+@import "core/globals";
+
+//Components
+@import "components/**/*";
+
+//Modules
+@import "modules/**/*";
