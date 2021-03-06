@@ -108,6 +108,11 @@
   <ItemGroup>
     <Content Include="Assets\css\ExternalReviewers.css" />
     <Content Include="Assets\js\ExternalReviewers.bundle.js" />
+    <None Include="Assets\js\SignalR\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Assets\js\SignalR\jquery-1.6.4.js" />
+    <Content Include="Assets\js\SignalR\jquery-1.6.4.min.js" />
+    <Content Include="Assets\js\SignalR\jquery.signalR-2.4.1.js" />
+    <Content Include="Assets\js\SignalR\jquery.signalR-2.4.1.min.js" />
     <Content Include="Constellation.License.txt" />
     <Content Include="Global.asax" />
     <Content Include="sitecore\shell\Applications\Content Manager\Dialogs\ExternalReview.xml" />
@@ -129,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="App_Config\Include\Feature\Commands.ExternalReview.config" />
     <Content Include="App_Config\Include\Foundation\Constellation.Foundation.ModelMapper.config" />
     <Content Include="App_Config\Include\Foundation\Constellation.Foundation.Mvc.config" />
     <None Include="packages.config" />
