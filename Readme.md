@@ -21,7 +21,7 @@ An agent was implemented to remove the expired links if there is no manual delet
 ## Video link
 ⟹ Here is the presentation of this module. 
 
-⟹ [Replace this Video link](#video-link)
+⟹ [Replace this Video link](/resources/demo_sugec.mp4)
 
 
 ## Installation instructions
