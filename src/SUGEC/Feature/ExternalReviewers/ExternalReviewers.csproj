@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agents\ReviewsCleanerAgent.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Models\Comment.cs" />

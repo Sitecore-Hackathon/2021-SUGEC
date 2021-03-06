@@ -1,5 +1,5 @@
 ﻿using Sitecore;
-using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
@@ -7,7 +7,9 @@ using Sitecore.Globalization;
 using Sitecore.IO;
 using Sitecore.Pipelines.HttpRequest;
 using Sitecore.SecurityModel;
+using System;
 using System.Linq;
+using Version = Sitecore.Data.Version;
 
 namespace ExternalReviewers.Processors
 {
@@ -59,13 +61,17 @@ namespace ExternalReviewers.Processors
         private Item ProcessItem(HttpRequestArgs args)
         {
             var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/reviews", args.LocalPath, '/'), Language.Invariant, Version.First, Context.Database, SecurityCheck.Disable);
-            if (item != null && item.HasChildren)
+            if (item != null)
             {
+                DateField date = item.Fields["Date"];
+                if (date != null && date.DateTime <= DateTime.UtcNow || !item.HasChildren) return null;
+
                 var pageItem = item.Children.First();
-                //this.TraceInfo(string.Concat(new object[] { "Reviewing for \"", args.LocalPath, "\" which points to \"", target.ID, "\"" }));
-                
+                this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath, "\" which points to \"", pageItem.DisplayName, "\"" }));
+
                 return pageItem;
             }
+
             return null;
         }
     }
