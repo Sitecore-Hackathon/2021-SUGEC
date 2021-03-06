@@ -1,5 +1,6 @@
 .annotation-modal {
   position: absolute;
+  z-index: 1;
 
   .comment {
     width: rem(350px);
