@@ -16,7 +16,13 @@ namespace SUGEC.Web.Commands
     {
         public override void Execute(CommandContext context)
         {
-            Sitecore.Context.ClientPage.Start(this, "Run", context.Parameters);
+            if ((int)context.Items.Length == 1)
+            {
+                NameValueCollection nameValueCollection = new NameValueCollection();
+                nameValueCollection["id"] = context.Items[0].ID.ToString();
+                nameValueCollection["language"] = context.Items[0].Language.ToString();
+                Context.ClientPage.Start(this, "Run", nameValueCollection);
+            }
         }
 
         protected static void Run(ClientPipelineArgs args)
@@ -24,6 +30,8 @@ namespace SUGEC.Web.Commands
             if (!args.IsPostBack)
             {
                 UrlString urlString = new UrlString(UIUtil.GetUri("control:ExternalReview"));
+                urlString.Append("id", args.Parameters["id"]);
+                urlString.Append("language", args.Parameters["language"]);
                 SheerResponse.ShowModalDialog(urlString.ToString(), "800", "300", "", true);
                 args.WaitForPostBack();
             }

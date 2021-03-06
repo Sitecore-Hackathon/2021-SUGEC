@@ -23,10 +23,10 @@ namespace SUGEC.Web.Commands
     public class CreateExternalReview : DialogForm
     {
         protected DateTimePicker ExpirationDate;
-        public string ItemID { get; set; }
 
         private const string ExternalReviewsSystemFolder = "{4BCA3B14-AA4C-4FB3-BC41-2CE2EFCA0FA2}";
         private const string ExternalReviewTemplateId = "{C5E3907C-2ACD-4E57-9BA1-C982BD35D0FF}";
+       
         protected override void OnOK(object sender, EventArgs e)
         {
             Assert.ArgumentNotNull((object)e, nameof(e));
@@ -45,7 +45,7 @@ namespace SUGEC.Web.Commands
             using (new Sitecore.SecurityModel.SecurityDisabler())
             {
 
-                var sourceItem = masterDB.GetItem(ItemID);
+                var sourceItem = UIUtil.GetItemFromQueryString(Context.ContentDatabase);
                 newItem.Editing.BeginEdit();
                 newItem["link expiration date"] = ExpirationDate.Value;
                 newItem["linked item id"] = sourceItem.ID.ToString();
@@ -68,40 +68,9 @@ namespace SUGEC.Web.Commands
                 }
 
                 newItem.Editing.BeginEdit();
-                newItem["review link"] = $"/host/{itemName}/{duplicatedItem.DisplayName}";
+                newItem["review link"] = $"/{itemName}/{duplicatedItem.DisplayName}";
                 newItem.Editing.EndEdit();
-
-                //string renderingId = "{2561F888-1F48-4347-9ADA-7BE6E70443D8}";
-                //string placeholder = "main";
-
-                //LayoutField layoutField = new LayoutField(duplicatedItem.Fields[FieldIDs.LayoutField]);
-                //LayoutDefinition layoutDefinition = LayoutDefinition.Parse(layoutField.Value);                                      
-                //string defaultDeviceId = "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}";
-                //DeviceDefinition deviceDefinition = layoutDefinition.GetDevice(defaultDeviceId);
-                //DeviceItem deviceItem = new DeviceItem(masterDB.GetItem(defaultDeviceId));
-
-                //if (deviceDefinition != null && deviceItem != null)
-                //{
-                //    /// Create a RenderingDefinition and add the reference of sublayout or rendering
-                //    RenderingDefinition renderingDefinition = new RenderingDefinition();
-                //    renderingDefinition.ItemID = renderingId;
-                //    /// Set placeholder where the rendering should be displayed
-                //    renderingDefinition.Placeholder = placeholder;
-                //    /// Get all added renderings
-                //    RenderingReference[] renderings = duplicatedItem.Visualization.GetRenderings(deviceItem, true);
-                //    /// Add rendering to end of list
-                //    deviceDefinition.AddRendering(renderingDefinition);
-
-                //    /// Save the layout changes
-                //    using (new SecurityDisabler())
-                //    {
-                //        duplicatedItem.Editing.BeginEdit();
-                //        layoutField.Value = layoutDefinition.ToXml();
-                //        duplicatedItem.Editing.EndEdit();
-                //    }
-
-
-
+                
                 try
                 {
                     Sitecore.Data.Database webDB = Sitecore.Configuration.Factory.GetDatabase("web");

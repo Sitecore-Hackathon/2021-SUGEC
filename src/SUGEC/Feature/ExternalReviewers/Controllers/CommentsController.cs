@@ -41,7 +41,7 @@ namespace ExternalReviewers.Controllers
                 return new JsonResult<List<CommentsResponse>>(response, jsonSettings, Encoding.UTF8, this);
             }
 
-            var workflowHistory = master.WorkflowProvider?.GetWorkflow(currentItem).GetHistory(currentItem);
+            var workflowHistory = master.WorkflowProvider?.GetWorkflow(currentItem).GetHistory(currentItem).OrderBy(x => x.Date);
             
             foreach (var workflowEvent in workflowHistory)
             {
@@ -54,8 +54,6 @@ namespace ExternalReviewers.Controllers
                     Id = currentItem.ID.ToShortID().ToString()
                 });
             }
-
-            response = response.OrderBy(x => x.Date).ToList();
 
             return new JsonResult<List<CommentsResponse>>(response, jsonSettings, Encoding.UTF8, this);
         }
