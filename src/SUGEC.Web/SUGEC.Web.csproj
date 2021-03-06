@@ -108,6 +108,11 @@
   <ItemGroup>
     <Content Include="Assets\css\ExternalReviewers.css" />
     <Content Include="Assets\js\ExternalReviewers.bundle.js" />
+    <None Include="Assets\js\signalR\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Assets\js\signalR\jquery-1.6.4.js" />
+    <Content Include="Assets\js\signalR\jquery-1.6.4.min.js" />
+    <Content Include="Assets\js\signalR\jquery.signalR-2.4.1.js" />
+    <Content Include="Assets\js\signalR\jquery.signalR-2.4.1.min.js" />
     <Content Include="Constellation.License.txt" />
     <Content Include="Global.asax" />
     <Content Include="sitecore\shell\Applications\Content Manager\Dialogs\ExternalReview.xml" />
