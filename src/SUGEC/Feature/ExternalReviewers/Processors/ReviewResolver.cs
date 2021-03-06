@@ -9,6 +9,7 @@ using Sitecore.Pipelines.HttpRequest;
 using Sitecore.SecurityModel;
 using System;
 using System.Linq;
+using Sitecore.Layouts;
 using Version = Sitecore.Data.Version;
 
 namespace ExternalReviewers.Processors
@@ -25,7 +26,7 @@ namespace ExternalReviewers.Processors
         public override void Process(HttpRequestArgs args)
         {
             Assert.ArgumentNotNull(args, "args");
-            
+
             var database = Context.Database;
             if (database == null)
             {
@@ -34,7 +35,7 @@ namespace ExternalReviewers.Processors
             }
             this.StartProfilingOperation("Resolve review.", args);
 
-            if (ExistsReview(args.LocalPath))
+            if (ExistsReview(args.LocalPath) && !Sitecore.Context.PageMode.IsExperienceEditor && !Sitecore.Context.PageMode.IsPreview)
             {
                 Context.Item = ProcessItem(args);
             }
@@ -49,10 +50,10 @@ namespace ExternalReviewers.Processors
         /// <returns>True if the review item exist.</returns>
         private bool ExistsReview(string review)
         {
-            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/reviews", review, '/'), Language.Invariant, Version.First, Context.Database, SecurityCheck.Disable);
+            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", review, '/'), Language.Invariant, Version.Latest, Context.Database, SecurityCheck.Disable);
             return item != null;
         }
-        
+
         /// <summary>
         /// Processes the item.
         /// </summary>
@@ -60,16 +61,18 @@ namespace ExternalReviewers.Processors
         /// <returns>The item.</returns>
         private Item ProcessItem(HttpRequestArgs args)
         {
-            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/reviews", args.LocalPath, '/'), Language.Invariant, Version.First, Context.Database, SecurityCheck.Disable);
+            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/'), Sitecore.Context.Language, Version.Latest, Context.Database, SecurityCheck.Disable);
             if (item != null)
             {
-                DateField date = item.Fields["Date"];
+                DateField date = item.Fields["link expiration date"];
                 if (date != null && date.DateTime <= DateTime.UtcNow || !item.HasChildren) return null;
+                //var pageItem = Sitecore.Context.Database.GetItem(
+                //    $"{FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/')}/{item.Children.First().DisplayName}");
 
-                var pageItem = item.Children.First();
-                this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath, "\" which points to \"", pageItem.DisplayName, "\"" }));
 
-                return pageItem;
+                this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath}));
+
+                return item;
             }
 
             return null;
