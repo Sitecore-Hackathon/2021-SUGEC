@@ -15,7 +15,7 @@ Basically, the content authors generates a temporarily URL that will be exposed 
 
 An agent was implemented to remove the expired links if there is no manual deletion.
 
-![External Reviwers](docs/images/external-reviewers.png?raw=true "External Reviewers")
+![External Reviwers](docs/images/external-reviewers.PNG?raw=true "External Reviewers")
 
    
 ## Video link
