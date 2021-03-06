@@ -61,18 +61,18 @@ namespace ExternalReviewers.Processors
         /// <returns>The item.</returns>
         private Item ProcessItem(HttpRequestArgs args)
         {
-            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/'), Language.Invariant, Version.Latest, Context.Database, SecurityCheck.Disable);
+            var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/'), Sitecore.Context.Language, Version.Latest, Context.Database, SecurityCheck.Disable);
             if (item != null)
             {
-                DateField date = (DateField)item.Fields["link expiration date"];
+                DateField date = item.Fields["link expiration date"];
                 if (date != null && date.DateTime <= DateTime.UtcNow || !item.HasChildren) return null;
-                var pageItem = Sitecore.Context.Database.GetItem(
-                    $"{FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/')}/{item.Children.First().DisplayName}");
+                //var pageItem = Sitecore.Context.Database.GetItem(
+                //    $"{FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/')}/{item.Children.First().DisplayName}");
 
 
-                this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath, "\" which points to \"", pageItem.DisplayName, "\"" }));
+                this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath}));
 
-                return pageItem;
+                return item;
             }
 
             return null;
