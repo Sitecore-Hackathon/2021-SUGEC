@@ -27,7 +27,7 @@ An agent was implemented to remove the expired links if there is no manual delet
 ## Installation instructions
 ⟹ Please follow this instructions to install this module:
 
-1. Sitecore package [link](resources/Hackathon2021-SUGEC-1.0.zip)
+1. Sitecore package [package](https://github.com/Sitecore-Hackathon/2021-SUGEC/blob/main/resources/Hackathon2021-SUGEC-1.0.zip)
 	- Use the Sitecore Installation Wizard to upload the package and install the module. This will install all Sitecore items and files necessary to run the new site in a new instance of Sitecore 10.1. 
 	
 2. Publish Site
