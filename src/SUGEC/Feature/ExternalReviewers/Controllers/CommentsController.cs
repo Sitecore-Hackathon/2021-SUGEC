@@ -36,7 +36,7 @@ namespace ExternalReviewers.Controllers
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
 
-            var workflowHistory = master.WorkflowProvider?.GetWorkflow(currentItem).GetHistory(currentItem);
+            var workflowHistory = master.WorkflowProvider?.GetWorkflow(currentItem).GetHistory(currentItem).OrderBy(x=>x.Date);
 
 
             foreach (var workflowEvent in workflowHistory)
@@ -51,7 +51,7 @@ namespace ExternalReviewers.Controllers
                 });
             }
 
-            return Json(response.OrderBy(x => x.Date), JsonRequestBehavior.AllowGet);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
