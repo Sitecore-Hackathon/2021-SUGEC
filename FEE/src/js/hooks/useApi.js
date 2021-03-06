@@ -30,6 +30,7 @@ const useApi = url => {
           return console.error(err.toString());
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

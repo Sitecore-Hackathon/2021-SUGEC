@@ -7,7 +7,7 @@ import App from './App';
 const container = document.getElementById('external-reviewers-container');
 
 render(
-  <Provider>
+  <Provider itemName={container.dataset.itemname}>
     <App src={container.dataset.src} />
   </Provider>,
   container

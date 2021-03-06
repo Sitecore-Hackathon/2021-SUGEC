@@ -5,7 +5,7 @@ import useApi from '../hooks/useApi';
 
 const Context = React.createContext();
 
-const Provider = ({ children }) => {
+const Provider = ({ itemName, children }) => {
   const [userName, setUserName] = useState(
     sessionStorage.getItem('commentsUsername', null)
   );
@@ -13,7 +13,7 @@ const Provider = ({ children }) => {
   const [returnCheck, setReturnCheck] = useState(false);
 
   const { comments, postComment, connected, loading } = useApi(
-    '/api/sitecore/comments'
+    `/api/sitecore/comments?itemName=${itemName}`
   );
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const Provider = ({ children }) => {
 };
 
 Provider.propTypes = {
+  itemName: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
 };
 
