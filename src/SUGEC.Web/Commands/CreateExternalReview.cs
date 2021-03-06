@@ -73,7 +73,7 @@ namespace SUGEC.Web.Commands
                 var cdsHostName = Settings.GetSetting("Feature.ExternalReviewers.CDsHostName");
                 var host = !string.IsNullOrEmpty(cdsHostName)?cdsHostName:string.Empty;
                 newItem.Editing.BeginEdit();
-                newItem["review link"] = $"/{host}/{itemName}/{duplicatedItem.DisplayName}";
+                newItem["review link"] = $"/{itemName}/{duplicatedItem.DisplayName}";
                 newItem.Editing.EndEdit();
                 
                 try
@@ -96,7 +96,7 @@ namespace SUGEC.Web.Commands
                 }
                 SheerResponse.CloseWindow();
 
-                SheerResponse.Alert($"Review Link Created: /{newItem.DisplayName}");
+                SheerResponse.Alert($"Review Link Created: {host}/{itemName}");
 
             }
 

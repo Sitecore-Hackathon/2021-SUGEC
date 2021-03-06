@@ -1,4 +1,5 @@
-﻿using ExternalReviewers.Models;
+﻿using System;
+using ExternalReviewers.Models;
 using Sitecore;
 using Sitecore.Collections;
 using Sitecore.Configuration;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web;
+using ExternalReviewers.Hubs;
 using Microsoft.AspNet.SignalR;
 using Sitecore.IO;
 using Sitecore.Security.Accounts;
@@ -18,7 +20,7 @@ namespace ExternalReviewers.Controllers
     
     public class CommentsController : Controller
     {
-        //private readonly IHubContext
+       // private readonly IHubContext<ExternalReviewersHub> _hub;
         [HttpGet]
         public ActionResult Index(string itemName)
         {
@@ -43,10 +45,15 @@ namespace ExternalReviewers.Controllers
 
             foreach (var workflowEvent in workflowHistory)
             {
+                var locationLeft = workflowEvent.CommentFields["Location Left"];
+                var locationTop = workflowEvent.CommentFields["Location Top"];
+                var location = string.IsNullOrEmpty(locationTop) || string.IsNullOrEmpty(locationLeft)
+                    ? null
+                    : new Location() {Left = locationLeft, Top = locationTop};
                 response.Add(new CommentsResponse
                 {
                     Body = workflowEvent.CommentFields["Comments"],
-                    Location = workflowEvent.CommentFields["Location"],
+                    Location = location,
                     Date = workflowEvent.Date.ToString("g"),
                     UserName = workflowEvent.User,
                     Id = currentItem.ID.ToShortID().ToString()
@@ -85,10 +92,14 @@ namespace ExternalReviewers.Controllers
                         new StringDictionary
                         {
                             {"Comments", model.Body},
-                            {"Location", model.Location},
+                            {"Location Left", model.Location?.Left},
+                            {"Location Top", model.Location?.Top},
                         });
                 }
 
+                model.UserName = virtualUser.Name;
+                model.Date = DateTime.UtcNow.ToString("g");
+                //_hub.Clients.All.commentsHub(model.UserName, model.Body, model.Date.ToString(), model.Location).RunSynchronously();
             }
 
             return Json(model, JsonRequestBehavior.AllowGet);

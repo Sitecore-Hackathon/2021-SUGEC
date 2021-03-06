@@ -113,6 +113,7 @@
     <Content Include="Assets\js\SignalR\jquery-1.6.4.min.js" />
     <Content Include="Assets\js\SignalR\jquery.signalR-2.4.1.js" />
     <Content Include="Assets\js\SignalR\jquery.signalR-2.4.1.min.js" />
+    <Content Include="Assets\js\SignalR\signalr.js" />
     <Content Include="Constellation.License.txt" />
     <Content Include="Global.asax" />
     <Content Include="sitecore\shell\Applications\Content Manager\Dialogs\ExternalReview.xml" />

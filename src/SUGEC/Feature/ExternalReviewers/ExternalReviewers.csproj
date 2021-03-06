@@ -109,6 +109,7 @@
     <Compile Include="Agents\ReviewsCleanerAgent.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="SignalRStartup.cs" />
     <Compile Include="Hubs\ExternalReviewersHub.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentsResponse.cs" />
