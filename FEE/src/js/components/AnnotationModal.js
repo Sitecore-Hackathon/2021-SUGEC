@@ -16,7 +16,8 @@ const AnnotationModal = ({ Location, isOpen, onClose }) => {
   return (
     <div
       className={classnames('annotation-modal', {
-        'annotation-modal--hidden': !isOpen
+        'annotation-modal--hidden': !isOpen,
+        'annotation-modal--right': Location.left > 1000
       })}
       style={Location}
       onClick={e => e.stopPropagation()}

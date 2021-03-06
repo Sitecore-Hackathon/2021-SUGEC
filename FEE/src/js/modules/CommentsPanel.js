@@ -16,12 +16,13 @@ const CommentsPanel = () => {
     setUserName,
     annotationsActive,
     setAnnotationsActive,
+    setOpenComment,
     comments,
     postComment
   } = useContext(Context);
 
   const commentsRef = useRef(null);
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const { current } = commentsRef;
@@ -54,7 +55,12 @@ const CommentsPanel = () => {
         </div>
         <div className="comments-panel__messages" ref={commentsRef}>
           {comments.map((comment, index) => (
-            <Comment key={index} {...comment} />
+            <Comment
+              key={index}
+              {...comment}
+              clickable={!!comment.Location && annotationsActive}
+              onClick={() => setOpenComment(index)}
+            />
           ))}
         </div>
 

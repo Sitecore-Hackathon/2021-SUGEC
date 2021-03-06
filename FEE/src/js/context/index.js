@@ -9,6 +9,8 @@ const Provider = ({ itemName, children }) => {
   const [userName, setUserName] = useState(
     sessionStorage.getItem('commentsUsername', null)
   );
+
+  const [openComment, setOpenComment] = useState(null);
   const [annotationsActive, setAnnotationsActive] = useState(false);
   const [returnCheck, setReturnCheck] = useState(false);
 
@@ -30,6 +32,8 @@ const Provider = ({ itemName, children }) => {
         returnCheck,
         setReturnCheck,
         comments,
+        openComment,
+        setOpenComment,
         postComment,
         connected,
         loading

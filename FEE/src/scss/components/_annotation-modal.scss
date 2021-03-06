@@ -11,6 +11,15 @@
   visibility: hidden;
 }
 
+.annotation-modal--right {
+  .annotation-modal__inner,
+  .comment {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
 .annotation-modal__pin {
   background: color("red");
   border: 2px outset ButtonFace;
@@ -22,6 +31,7 @@
   top: 0;
   transform: translate(-50%, -50%);
   width: rem(25px);
+  z-index: 1;
 }
 
 button {

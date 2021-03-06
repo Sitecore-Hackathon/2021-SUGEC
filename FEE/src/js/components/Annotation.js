@@ -4,19 +4,16 @@ import classnames from 'classnames';
 
 import Comment from './Comment';
 
-const Annotation = ({ Location, UserName, Date, Body }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const Annotation = ({ Location, UserName, Date, Body, isOpen, onClick }) => {
   return (
     <div
-      className={classnames('annotation-modal')}
+      className={classnames('annotation-modal', {
+        'annotation-modal--right': Location.left > 1000
+      })}
       style={Location}
       onClick={e => e.stopPropagation()}
     >
-      <button
-        className="annotation-modal__pin"
-        onClick={() => setIsOpen(!isOpen)}
-      />
+      <button className="annotation-modal__pin" onClick={onClick} />
       {isOpen && <Comment {...{ UserName, Date, Body }} />}
     </div>
   );
@@ -24,9 +21,11 @@ const Annotation = ({ Location, UserName, Date, Body }) => {
 
 Annotation.propTypes = {
   Location: PropTypes.object.isRequired,
-  UserName: PropTypes.string,
-  Date: PropTypes.string,
-  Body: PropTypes.string
+  UserName: PropTypes.string.isRequired,
+  Date: PropTypes.string.isRequired,
+  Body: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Annotation;
