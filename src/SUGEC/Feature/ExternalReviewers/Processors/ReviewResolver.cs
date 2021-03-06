@@ -33,6 +33,12 @@ namespace ExternalReviewers.Processors
                 Tracer.Warning("There is no context database in ReviewResolver.");
                 return;
             }
+
+            if (Sitecore.Context.Item != null)
+            {
+                return;
+            }
+
             this.StartProfilingOperation("Resolve review.", args);
 
             if (ExistsReview(args.LocalPath) && !Sitecore.Context.PageMode.IsExperienceEditor && !Sitecore.Context.PageMode.IsPreview)
@@ -64,12 +70,12 @@ namespace ExternalReviewers.Processors
             var item = ItemManager.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/'), Sitecore.Context.Language, Version.Latest, Context.Database, SecurityCheck.Disable);
             if (item != null)
             {
-                DateField date = item.Fields["link expiration date"];
-                if (date != null && date.DateTime <= DateTime.UtcNow || !item.HasChildren) return null;
-                //var pageItem = Sitecore.Context.Database.GetItem(
-                //    $"{FileUtil.MakePath("/sitecore/system/External Reviews", args.LocalPath, '/')}/{item.Children.First().DisplayName}");
-
-
+                if (item.TemplateName.Equals("external reviewers", StringComparison.OrdinalIgnoreCase))
+                {
+                    DateField date = item.Fields["link expiration date"];
+                    if (date != null && date.DateTime <= DateTime.UtcNow || !item.HasChildren) return null;
+                }
+                
                 this.TraceInfo(string.Concat(new object[] { "External review \"", args.LocalPath}));
 
                 return item;

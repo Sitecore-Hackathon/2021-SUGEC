@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Web;
 using Sitecore;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
@@ -42,6 +44,7 @@ namespace SUGEC.Web.Commands
                 SheerResponse.Alert("Link could not be created");
                 return;
             }
+
             using (new Sitecore.SecurityModel.SecurityDisabler())
             {
 
@@ -67,8 +70,10 @@ namespace SUGEC.Web.Commands
                     }
                 }
 
+                var cdsHostName = Settings.GetSetting("Feature.ExternalReviewers.CDsHostName");
+                var host = !string.IsNullOrEmpty(cdsHostName)?cdsHostName:string.Empty;
                 newItem.Editing.BeginEdit();
-                newItem["review link"] = $"/{itemName}/{duplicatedItem.DisplayName}";
+                newItem["review link"] = $"/{host}/{itemName}/{duplicatedItem.DisplayName}";
                 newItem.Editing.EndEdit();
                 
                 try
