@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+    <ExternalReview>
+        <!--<FormDialog Icon="WordProcessing/32x32/line_spacing_h.png" Header="Component Help" TextCssClass="scDialogTextWithPadding"
+                    Text="Please review the help and videos for this component">
+            
+            <Stylesheet Src="/sitecore/shell/Applications/Dialogs/HelpDialog/HelpDialog.css" DeviceDependant="false" />
+            <Script Src="/sitecore/shell/Controls/Lib/scriptaculous/scriptaculous.js?load=effects,dragdrop"></Script>
+            <div class="help-dialog-container">
+                <Literal class="help-dialog-text" ID="HelpLiteral" />
+            </div>
+            <div class="help-link-container">
+                <Literal ID="HelpLink" />
+            </div>
+            <div class="help-frame-container">
+                <Literal ID="VideoSource" />
+            </div>
+        </FormDialog>-->
+        <FormDialog Icon="Network/32x32/link.png" Style="height: 200%" Header="Generate Review Link" Text="Create a link for external reviewers" OKButton="Create" CancelButton="false">
+            <CodeBeside Type="SUGEC.Web.Commands.CreateExternalReview,SUGEC.Web"/>
+
+            <div class="scStretch" >
+                <div class="col2">
+                    <Border Background="transparent" Border="none" GridPanel.VAlign="top" Padding="4px 0px 0px 0px">
+                        <GridPanel Class="scFormTable" CellPadding="2" Columns="2" Width="100%" GridPanel.Height="100%">
+                            <Label For="ExpirationDate" GridPanel.NoWrap="true">
+                                <Literal Text="Expiration Date:" />
+                            </Label>
+                            <DateTimePicker ID="ExpirationDate" Width="100%" />
+                        </GridPanel>
+                    </Border>
+                </div>
+            </div>
+        </FormDialog>
+    </ExternalReview>
+</control>
+<!--<?xml version="1.0" encoding="UTF-8"?>
+<control xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense" xmlns:def="Definition">
+    <ExternalReview>
+        <FormDialog Icon="Network/32x32/link.png" Style="height: 200%" Header="Generate Review Link" Text="Create a link for external reviewers" OKButton="Insert">
+
+            
+            <div class="scStretch" >
+                <div class="col2">
+                    <Border Background="transparent" Border="none" GridPanel.VAlign="top" Padding="4px 0px 0px 0px">
+                        <GridPanel Class="scFormTable" CellPadding="2" Columns="2" Width="100%" GridPanel.Height="100%">
+                            <Label For="TextFrom" GridPanel.NoWrap="true">
+                                <Literal Text="From Text:" />
+                            </Label>
+                            <Edit ID="TextFrom" Width="100%" OnChange="generateUrl()"/>
+                            <Label for="TextTo" GridPanel.NoWrap="true">
+                                <Literal Text="To Text:" />
+                            </Label>
+                            <Edit ID="TextTo" Width="100%" OnChange="generateUrl()"/>
+                            <Label for="TextDestination" GridPanel.NoWrap="true">
+                                <Literal Text="Destination Link:" />
+                            </Label>
+                            <Edit ID="TextDestination" Width="100%" OnChange="generateUrl()"/>
+
+                            <Label for="TextUrl" GridPanel.NoWrap="true">
+                                <Literal Text="Copy Url:" />
+                            </Label>
+                            <Label ID="TextUrl" GridPanel.NoWrap="true">
+                            </Label>
+                        </GridPanel>
+                    </Border>
+                </div>
+            </div>
+        </FormDialog>
+    </ExternalReview>
+</control>-->

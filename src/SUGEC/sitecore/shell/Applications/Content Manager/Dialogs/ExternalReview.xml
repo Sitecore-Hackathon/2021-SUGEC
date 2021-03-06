@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<control xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense" xmlns:def="Definition">
+    <ExternalReview>
+        <FormDialog Icon="Network/32x32/link.png" Style="height: 200%" Header="Generate Url" Text="Enter Url Parameter" OKButton="Insert">
+
+            <Script>
+                function generateUrl()
+                {
+                var textFrom = document.getElementById("TextFrom").value;
+                var textTo = document.getElementById("TextTo").value;
+                var textDestination = document.getElementById("TextDestination").value;
+                var url = "?fromtext=" + textFrom + "&totext=" + textTo + "&destination=" + textDestination;
+                var textUrl = document.getElementById("TextUrl");
+                textUrl.innerText = url;
+                }
+            </Script>
+            <style>
+                .scFormDialogFooter{
+                display: none !important;
+                }
+                .scFormDialogFooter .footerOkCancel{
+                display: none !important;
+                }
+            </style>
+
+            <div class="scStretch" >
+                <div class="col2">
+                    <Border Background="transparent" Border="none" GridPanel.VAlign="top" Padding="4px 0px 0px 0px">
+                        <GridPanel Class="scFormTable" CellPadding="2" Columns="2" Width="100%" GridPanel.Height="100%">
+                            <Label For="TextFrom" GridPanel.NoWrap="true">
+                                <Literal Text="From Text:" />
+                            </Label>
+                            <Edit ID="TextFrom" Width="100%" OnChange="generateUrl()"/>
+                            <Label for="TextTo" GridPanel.NoWrap="true">
+                                <Literal Text="To Text:" />
+                            </Label>
+                            <Edit ID="TextTo" Width="100%" OnChange="generateUrl()"/>
+                            <Label for="TextDestination" GridPanel.NoWrap="true">
+                                <Literal Text="Destination Link:" />
+                            </Label>
+                            <Edit ID="TextDestination" Width="100%" OnChange="generateUrl()"/>
+
+                            <Label for="TextUrl" GridPanel.NoWrap="true">
+                                <Literal Text="Copy Url:" />
+                            </Label>
+                            <Label ID="TextUrl" GridPanel.NoWrap="true">
+                            </Label>
+                        </GridPanel>
+                    </Border>
+                </div>
+            </div>
+        </FormDialog>
+    </ExternalReview>
+</control>
