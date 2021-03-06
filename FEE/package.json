@@ -30,11 +30,11 @@
     "@verndale/color-palette": "0.1.0",
     "axios": "0.21.1",
     "classnames": "2.2.6",
-    "dayjs": "1.10.4",
     "normalize.css": "8.0.1",
     "prop-types": "15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-switch": "6.0.0",
     "sass-mq": "5.0.1",
     "sass-rem": "2.0.1"
   },

@@ -2,3 +2,13 @@ html,
 body {
   overflow-x: hidden;
 }
+
+body {
+  @include rem-baseline;
+  background-color: color("gray5");
+  font-family: $primary-font;
+}
+
+* {
+  box-sizing: border-box;
+}

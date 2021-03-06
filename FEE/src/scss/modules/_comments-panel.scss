@@ -1,8 +1,5 @@
 .comments-panel {
-  @include rem-baseline;
-
   background-color: color("white");
-  font-family: $primary-font;
   height: 100vh;
   max-width: calc(100% - #{rem(45px)});
   position: fixed;
@@ -15,19 +12,14 @@
 
   &:not(.comments-panel--expanded) {
     &:hover {
-      box-shadow: rem(0 0 20px) color("gray4");
+      box-shadow: rem(0 0 20px) color("black");
       transform: translateX(calc(100% - #{rem(10px)}));
     }
-  }
-
-  &,
-  * {
-    box-sizing: border-box;
   }
 }
 
 .comments-panel--expanded {
-  box-shadow: rem(0 0 20px) color("gray4");
+  box-shadow: rem(0 0 20px) color("black");
   transform: translateX(0);
 }
 
@@ -45,11 +37,23 @@
   }
 }
 
+.comments-panel__switch {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: rem(10px);
+
+  p {
+    font-size: rem(14px);
+    margin: rem(0 15px 0 0);
+  }
+}
+
 .comments-panel__inner {
   display: flex;
   flex-direction: column;
   height: calc(100% - #{rem(50px)});
-  padding: rem(20px);
+  padding: rem(10px 20px 20px);
 }
 
 .comments-panel__messages {

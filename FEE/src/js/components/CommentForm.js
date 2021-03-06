@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const CommentForm = ({ onSubmit, disabled }) => {
-  const [comment, setComment] = useState('');
-  const [returnCheck, setReturnCheck] = useState(false);
+import { Context } from '../context';
 
-  const handleSubmit = e => {
+const CommentForm = ({ onSubmit, disabled }) => {
+  const { returnCheck, setReturnCheck, connected, loading } = useContext(
+    Context
+  );
+
+  const [comment, setComment] = useState('');
+
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (comment) {
-      onSubmit(comment);
+      await onSubmit(comment);
       setComment('');
     }
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDown = async e => {
     if (e.keyCode === 13 && returnCheck) {
       e.preventDefault();
 
       if (comment) {
-        onSubmit(comment);
+        await onSubmit(comment);
         setComment('');
       }
     }
@@ -33,7 +38,7 @@ const CommentForm = ({ onSubmit, disabled }) => {
         onChange={e => setComment(e.target.value)}
         onKeyDown={handleKeyDown}
         value={comment}
-        disabled={disabled}
+        disabled={!connected || loading}
         required
       ></textarea>
       <div className="panel-form__footer">
@@ -55,9 +60,11 @@ const CommentForm = ({ onSubmit, disabled }) => {
           </span>
           Press enter to send
         </label>
-        <button type="submit" disabled={disabled}>
-          Post
-        </button>
+        {!returnCheck && (
+          <button type="submit" disabled={!connected || loading}>
+            Send
+          </button>
+        )}
       </div>
     </form>
   );

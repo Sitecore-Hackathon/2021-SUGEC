@@ -1,0 +1,65 @@
+.annotation-modal {
+  position: absolute;
+
+  .comment {
+    width: rem(350px);
+  }
+}
+
+.annotation-modal--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.annotation-modal__pin {
+  background: color("red");
+  border: 2px outset ButtonFace;
+  border-radius: 50%;
+  box-shadow: inset 0 0 6px rgba(color("black"), 0.5), inset 0 -1px 6px rgba(color("black"), 0.4), inset 0 8px 3px rgba(color("black"), 0.3), inset 0 10px 3px rgba(color("white"), 0.1), 0 3px 6px rgba(color("black"), 0.5);
+  height: rem(25px);
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: rem(25px);
+}
+
+button {
+  &.annotation-modal__pin {
+    cursor: pointer;
+  }
+}
+
+.annotation-modal__inner {
+  background-color: color("white");
+  border-radius: rem(4px);
+  box-shadow: rem(0 2px 4px) color("black");
+  color: color("charcoal");
+  font-size: rem(16px);
+  margin-bottom: rem(10px);
+  padding: rem(10px);
+  width: rem(350px);
+
+  .panel-form {
+    margin-top: rem(10px);
+  }
+}
+
+.annotation-modal__close {
+  text-align: right;
+
+  button {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    height: rem(16px);
+    padding: 0;
+    width: rem(16px);
+
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

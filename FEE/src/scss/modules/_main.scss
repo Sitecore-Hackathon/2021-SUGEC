@@ -1,0 +1,21 @@
+.external-reviewers {
+  overflow-x: auto;
+}
+
+.preview {
+  display: block;
+  height: 100vh;
+  position: relative;
+  width: 100vw;
+
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.preview--annotations {
+  box-shadow: rem(0 0 10px) color("black");
+  margin: 0 auto;
+  width: rem(1440px);
+}
