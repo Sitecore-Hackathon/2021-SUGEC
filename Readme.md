@@ -1,13 +1,5 @@
 # Hackathon Submission Entry form
 
-> __Important__  
-> 
-> Copy and paste the content of this file into README.md or face automatic __disqualification__  
-> All headlines and subheadlines shall be retained if not noted otherwise.  
-> Fill in text in each section as instructed and then delete the existing text, including this blockquote.
-
-You can find a very good reference to Github flavoured markdown reference in [this cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). If you want something a bit more WYSIWYG for editing then could use [StackEdit](https://stackedit.io/app) which provides a more user friendly interface for generating the Markdown code. Those of you who are [VS Code fans](https://code.visualstudio.com/docs/languages/markdown#_markdown-preview) can edit/preview directly in that interface too.
-
 ## Team name
 ⟹ SUGEC
 
@@ -15,7 +7,12 @@ You can find a very good reference to Github flavoured markdown reference in [th
 ⟹ The best enhancement to the Sitecore Admin (XP) for Content Editors & Marketers
 
 ## Description
-⟹ Write a clear description of your hackathon entry.  
+⟹ Why this module?
+During the reviewing process of content, users review and verify content before it is published. No matter what their roles are, they need to own credentials to log in into the system and perform their duties. 
+There is a need where external users may be able to review content and provide feedback to authors in order to avoid unwanted content to be live. This Module, External Reviewers, let users that are not part of the CMS add comments to items and interact with other reviewers.
+
+Basically, the content authors generates a temporarily URL that will be exposed to external users and will be able to see a preview of a draft page and add comments to it.
+   
 
   - Module Purpose
   - What problem was solved (if any)
