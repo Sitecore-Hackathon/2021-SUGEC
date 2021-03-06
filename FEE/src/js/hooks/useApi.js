@@ -4,7 +4,7 @@ import Axios from 'axios';
 const useApi = url => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState(true);
 
   const connection = useMemo(() => {
     try {
