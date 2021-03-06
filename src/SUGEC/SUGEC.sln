@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{E68A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{AA39FD15-BC02-4F34-AD67-4CE726FCFC6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalReviewers", "Feature\ExternalReviewers\ExternalReviewers.csproj", "{22BC9711-D8B6-4F16-AECF-D7C181A1B12B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +23,16 @@ Global
 		{BC282D60-3E1F-43B9-B461-D0F3F1EB9FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC282D60-3E1F-43B9-B461-D0F3F1EB9FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC282D60-3E1F-43B9-B461-D0F3F1EB9FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22BC9711-D8B6-4F16-AECF-D7C181A1B12B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BC9711-D8B6-4F16-AECF-D7C181A1B12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BC9711-D8B6-4F16-AECF-D7C181A1B12B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22BC9711-D8B6-4F16-AECF-D7C181A1B12B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22BC9711-D8B6-4F16-AECF-D7C181A1B12B} = {E68ABE26-1588-42A7-A9B8-E10A8E127B3E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
