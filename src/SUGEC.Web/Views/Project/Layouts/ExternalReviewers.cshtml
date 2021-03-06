@@ -1,0 +1,19 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Collections;
+<html>
+<head runat="server">
+    <title>Welcome to the SUGEC Hackathon 2021 project</title>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, width=device-width, user-scalable=no" />
+    <link rel=stylesheet href="/Assets/css/ExternalReviewers.css">
+</head>
+<body>
+    @{
+        var src = Sitecore.Context.Item["review link"];
+    }
+    <div id="external-reviewers-container" data-src="@src"></div>
+
+    <script src="/Assets/js/ExternalReviewers.bundle.js"></script>
+</body>
+</html>

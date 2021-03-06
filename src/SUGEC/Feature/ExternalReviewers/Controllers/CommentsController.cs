@@ -48,7 +48,8 @@ namespace ExternalReviewers.Controllers
                 response.Add(new CommentsResponse
                 {
                     Body = workflowEvent.CommentFields["Comments"],
-                    Date = workflowEvent.Date,
+                    Location = workflowEvent.CommentFields["Location"],
+                    Date = workflowEvent.Date.ToString("g"),
                     UserName = workflowEvent.User,
                     Id = currentItem.ID.ToShortID().ToString()
                 });
@@ -92,7 +93,8 @@ namespace ExternalReviewers.Controllers
                     workflowProvider.HistoryStore.AddHistory(currentItem, workflowState, workflowState,
                         new StringDictionary
                         {
-                            {"Comments", model.Body}
+                            {"Comments", model.Body},
+                            {"Location", model.Location},
                         });
                 }
             }

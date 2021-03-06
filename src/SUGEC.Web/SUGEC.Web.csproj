@@ -119,6 +119,7 @@
     <Content Include="App_Config\Include\Feature\Feature.ExternalReviewers.config" />
     <Content Include="Assets\js\ExternalReviewers.bundle.js.map" />
     <Content Include="Views\Feature\ExternalReviewers\ExternalReviewSidebar.cshtml" />
+    <Content Include="Views\Project\Layouts\ExternalReviewers.cshtml" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

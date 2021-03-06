@@ -46,57 +46,5 @@ namespace SUGEC.Web.Commands
             return context.Items[0].Paths.FullPath.ToLower().StartsWith(SiteContext.Current.StartPath.ToLower()) ? CommandState.Enabled : CommandState.Disabled;
         }
 
-        //public override void Execute(CommandContext context)
-        //{
-        //    string renderingId = context.Parameters["renderingId"];
-        //    NameValueCollection parameters = new NameValueCollection();
-        //    if (!string.IsNullOrEmpty(renderingId))
-        //    {
-        //        parameters["renderingItemId"] = renderingId;
-        //        Context.ClientPage.Start((object)this, "Run", parameters);
-        //    }
-        //}
-
-        //protected virtual void Run(ClientPipelineArgs args)
-        //{
-        //    Assert.ArgumentNotNull((object)args, nameof(args));
-        //    if (!SheerResponse.CheckModified())
-        //        return;
-        //    Assert.IsNotNull((object)args, nameof(args));
-        //    string parameter = args.Parameters["renderingItemId"];
-        //    Assert.IsNotNullOrEmpty(parameter, "renderingItemId");
-        //    string formValue = WebUtil.GetFormValue("scLanguage");
-        //    Assert.IsNotNullOrEmpty(formValue, "lang");
-        //    Item obj = Client.ContentDatabase.GetItem(parameter, Language.Parse(formValue));
-        //    if (obj == null)
-        //    {
-        //        SheerResponse.Alert("Item not found.");
-        //        return;
-        //    }
-
-        //    if (args.IsPostBack)
-        //    {
-        //        if (!args.HasResult)
-        //            return;
-        //    }
-        //    else
-        //    {
-        //        SheerResponse.ShowModalDialog(this.GetOptions(args).ToUrlString().ToString(), "740", "600", obj.Name + " Help", true);
-        //        args.WaitForPostBack(true);
-        //    }
-        //}
-
-        //protected virtual HelpDialogOptions GetOptions(ClientPipelineArgs args)
-        //{
-        //    Assert.ArgumentNotNull((object)args, nameof(args));
-        //    string parameter = args.Parameters["renderingItemId"];
-        //    Language language1 = WebEditUtil.GetClientContentLanguage();
-        //    if ((object)language1 == null)
-        //        language1 = Context.Language;
-        //    Language language2 = language1;
-        //    Item obj = Client.ContentDatabase.GetItem(parameter, language2);
-        //    Assert.IsNotNull((object)obj, "item");
-        //    return new HelpDialogOptions(obj);
-        //}
     }
 }

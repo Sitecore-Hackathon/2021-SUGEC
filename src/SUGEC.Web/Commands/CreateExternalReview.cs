@@ -23,7 +23,7 @@ namespace SUGEC.Web.Commands
     public class CreateExternalReview : DialogForm
     {
         protected DateTimePicker ExpirationDate;
-
+        public string ItemID { get; set; }
 
         private const string ExternalReviewsSystemFolder = "{4BCA3B14-AA4C-4FB3-BC41-2CE2EFCA0FA2}";
         private const string ExternalReviewTemplateId = "{C5E3907C-2ACD-4E57-9BA1-C982BD35D0FF}";
@@ -35,7 +35,8 @@ namespace SUGEC.Web.Commands
             Sitecore.Data.Database masterDB = Sitecore.Configuration.Factory.GetDatabase("master");
             Item parentItem = masterDB.GetItem(ExternalReviewsSystemFolder);
             var template = masterDB.GetTemplate(ExternalReviewTemplateId);
-            Item newItem = parentItem.Add(Guid.NewGuid().ToString("N"), template);
+            var itemName = Guid.NewGuid().ToString("N");
+            Item newItem = parentItem.Add(itemName, template);
             if (newItem == null)
             {
                 SheerResponse.Alert("Link could not be created");
@@ -43,83 +44,86 @@ namespace SUGEC.Web.Commands
             }
             using (new Sitecore.SecurityModel.SecurityDisabler())
             {
-                
-                    var sourceItem = masterDB.GetItem(Sitecore.Context.Item.ID);
-                    newItem.Editing.BeginEdit();
-                    newItem["link expiration date"] = ExpirationDate.Value;
-                    newItem["linked item id"] = sourceItem.ID.ToString();
-                    newItem.Editing.EndEdit();
 
-                    var duplicatedItem = sourceItem.CopyTo(newItem, sourceItem.DisplayName, ID.NewID, false);
+                var sourceItem = masterDB.GetItem(ItemID);
+                newItem.Editing.BeginEdit();
+                newItem["link expiration date"] = ExpirationDate.Value;
+                newItem["linked item id"] = sourceItem.ID.ToString();
+                newItem.Editing.EndEdit();
 
-                    duplicatedItem.Editing.BeginEdit();
-                    duplicatedItem["__default workflow"] = "";
-                    duplicatedItem["__workflow"] = "";
-                    duplicatedItem.Editing.EndEdit();
+                var duplicatedItem = sourceItem.CopyTo(newItem, sourceItem.DisplayName, ID.NewID, false);
 
-                    var currentVersion = duplicatedItem.Versions.GetLatestVersion();
-                    foreach (var itemVersion in duplicatedItem.Versions.GetVersions(true))
+                duplicatedItem.Editing.BeginEdit();
+                duplicatedItem["__default workflow"] = "";
+                duplicatedItem["__workflow"] = "";
+                duplicatedItem.Editing.EndEdit();
+
+                var currentVersion = duplicatedItem.Versions.GetLatestVersion();
+                foreach (var itemVersion in duplicatedItem.Versions.GetVersions(true))
+                {
+                    if (!itemVersion.Version.Number.Equals(currentVersion.Version.Number))
                     {
-                        if (!itemVersion.Version.Number.Equals(currentVersion.Version.Number))
-                        {
-                            itemVersion.Versions.RemoveVersion();
-                        }
+                        itemVersion.Versions.RemoveVersion();
                     }
+                }
+
+                newItem.Editing.BeginEdit();
+                newItem["review link"] = $"/host/{itemName}/{duplicatedItem.DisplayName}";
+                newItem.Editing.EndEdit();
+
+                //string renderingId = "{2561F888-1F48-4347-9ADA-7BE6E70443D8}";
+                //string placeholder = "main";
+
+                //LayoutField layoutField = new LayoutField(duplicatedItem.Fields[FieldIDs.LayoutField]);
+                //LayoutDefinition layoutDefinition = LayoutDefinition.Parse(layoutField.Value);                                      
+                //string defaultDeviceId = "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}";
+                //DeviceDefinition deviceDefinition = layoutDefinition.GetDevice(defaultDeviceId);
+                //DeviceItem deviceItem = new DeviceItem(masterDB.GetItem(defaultDeviceId));
+
+                //if (deviceDefinition != null && deviceItem != null)
+                //{
+                //    /// Create a RenderingDefinition and add the reference of sublayout or rendering
+                //    RenderingDefinition renderingDefinition = new RenderingDefinition();
+                //    renderingDefinition.ItemID = renderingId;
+                //    /// Set placeholder where the rendering should be displayed
+                //    renderingDefinition.Placeholder = placeholder;
+                //    /// Get all added renderings
+                //    RenderingReference[] renderings = duplicatedItem.Visualization.GetRenderings(deviceItem, true);
+                //    /// Add rendering to end of list
+                //    deviceDefinition.AddRendering(renderingDefinition);
+
+                //    /// Save the layout changes
+                //    using (new SecurityDisabler())
+                //    {
+                //        duplicatedItem.Editing.BeginEdit();
+                //        layoutField.Value = layoutDefinition.ToXml();
+                //        duplicatedItem.Editing.EndEdit();
+                //    }
 
 
-                    string renderingId = "{2561F888-1F48-4347-9ADA-7BE6E70443D8}";
-                    string placeholder = "main";
 
-                    LayoutField layoutField = new LayoutField(duplicatedItem.Fields[FieldIDs.LayoutField]);
-                    LayoutDefinition layoutDefinition = LayoutDefinition.Parse(layoutField.Value);                                      
-                    string defaultDeviceId = "{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}";
-                    DeviceDefinition deviceDefinition = layoutDefinition.GetDevice(defaultDeviceId);
-                    DeviceItem deviceItem = new DeviceItem(masterDB.GetItem(defaultDeviceId));
-
-                    if (deviceDefinition != null && deviceItem != null)
+                try
+                {
+                    Sitecore.Data.Database webDB = Sitecore.Configuration.Factory.GetDatabase("web");
+                    PublishOptions po = new PublishOptions(masterDB, webDB, PublishMode.Smart,
+                        Sitecore.Context.Item.Language, DateTime.Now)
                     {
-                        /// Create a RenderingDefinition and add the reference of sublayout or rendering
-                        RenderingDefinition renderingDefinition = new RenderingDefinition();
-                        renderingDefinition.ItemID = renderingId;
-                        /// Set placeholder where the rendering should be displayed
-                        renderingDefinition.Placeholder = placeholder;
-                        /// Get all added renderings
-                        RenderingReference[] renderings = duplicatedItem.Visualization.GetRenderings(deviceItem, true);
-                        /// Add rendering to end of list
-                        deviceDefinition.AddRendering(renderingDefinition);
-
-                        /// Save the layout changes
-                        using (new SecurityDisabler())
-                        {
-                            duplicatedItem.Editing.BeginEdit();
-                            layoutField.Value = layoutDefinition.ToXml();
-                            duplicatedItem.Editing.EndEdit();
-                        }
+                        RootItem = newItem,
+                        Deep = true
+                    };
 
 
+                    new Publisher(po).Publish();
+                }
+                catch (Exception ex)
+                {
+                    Sitecore.Diagnostics.Log.Error("Exception publishing items from custom pipeline! : " + ex,
+                        this);
+                }
+                SheerResponse.CloseWindow();
 
-                        try
-                        {
-                            Sitecore.Data.Database webDB = Sitecore.Configuration.Factory.GetDatabase("web");
-                            PublishOptions po = new PublishOptions(masterDB, webDB, PublishMode.Smart,
-                                Sitecore.Context.Item.Language, DateTime.Now)
-                            {
-                                RootItem = newItem,
-                                Deep = true
-                            };
+                SheerResponse.Alert($"Review Link Created: /{newItem.DisplayName}");
 
-
-                            new Publisher(po).Publish();
-                        }
-                        catch (Exception ex)
-                        {
-                            Sitecore.Diagnostics.Log.Error("Exception publishing items from custom pipeline! : " + ex,
-                                this);
-                        }
-                        SheerResponse.CloseWindow();
-
-                        SheerResponse.Alert($"Review Link Created: /{newItem.DisplayName}");
-                    }
             }
 
         }
