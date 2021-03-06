@@ -60,7 +60,7 @@ const useApi = url => {
         data: {
           UserName,
           Body,
-          Location: Location ? JSON.stringify(Location) : null
+          Location
         }
       });
       // Remove this line when signalR is connected

@@ -9,7 +9,14 @@ const AnnotationModal = ({ Location, isOpen, onClose }) => {
   const { userName, postComment } = useContext(Context);
 
   const handlePostComent = async Body => {
-    await postComment({ UserName: userName, Body, Location });
+    await postComment({
+      UserName: userName,
+      Body,
+      Location: {
+        Left: Location.Left.toString(),
+        Top: Location.Top.toString()
+      }
+    });
     onClose();
   };
 
