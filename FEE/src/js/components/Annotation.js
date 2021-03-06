@@ -8,9 +8,9 @@ const Annotation = ({ Location, UserName, Date, Body, isOpen, onClick }) => {
   return (
     <div
       className={classnames('annotation-modal', {
-        'annotation-modal--right': Location.left > 1000
+        'annotation-modal--right': Location.Left > 1000
       })}
-      style={Location}
+      style={{ left: `${Location.Left}px`, top: `${Location.Top}px` }}
       onClick={e => e.stopPropagation()}
     >
       <button className="annotation-modal__pin" onClick={onClick} />

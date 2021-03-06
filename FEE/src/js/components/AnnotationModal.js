@@ -17,9 +17,9 @@ const AnnotationModal = ({ Location, isOpen, onClose }) => {
     <div
       className={classnames('annotation-modal', {
         'annotation-modal--hidden': !isOpen,
-        'annotation-modal--right': Location.left > 1000
+        'annotation-modal--right': Location.Left > 1000
       })}
-      style={Location}
+      style={{ left: `${Location.Left}px`, top: `${Location.Top}px` }}
       onClick={e => e.stopPropagation()}
     >
       <div className="annotation-modal__pin" />

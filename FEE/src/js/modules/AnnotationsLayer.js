@@ -15,7 +15,7 @@ const AnnotationsLayer = () => {
     loading
   } = useContext(Context);
 
-  const [location, setLocation] = useState({ left: 0, top: 0 });
+  const [location, setLocation] = useState({ Left: 0, Top: 0 });
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
@@ -28,11 +28,11 @@ const AnnotationsLayer = () => {
   const handleClick = e => {
     if (!userName || !connected || loading) return;
     const bounds = containerRef.current.getBoundingClientRect();
-    const left = e.clientX - bounds.left;
-    const top = e.clientY - bounds.top;
+    const Left = e.clientX - bounds.left;
+    const Top = e.clientY - bounds.top;
 
     setOpenComment(null);
-    setLocation({ left, top });
+    setLocation({ Left, Top });
     setIsOpen(true);
   };
 
