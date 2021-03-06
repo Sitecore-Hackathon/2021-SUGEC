@@ -17,8 +17,8 @@ const useApi = url => {
 
   useEffect(() => {
     if (connection) {
-      connection.on('ReceiveComment', (UserName, Body, Date) => {
-        setComments([...comments, { UserName, Body, Date }]);
+      connection.on('ReceiveComment', (UserName, Body, Date, Location) => {
+        setComments([...comments, { UserName, Body, Date, Location }]);
       });
 
       connection
