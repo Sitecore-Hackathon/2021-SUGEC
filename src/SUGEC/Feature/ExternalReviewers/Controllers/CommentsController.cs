@@ -1,44 +1,48 @@
 ﻿using ExternalReviewers.Models;
-using Sitecore;
+using Newtonsoft.Json;
 using Sitecore.Collections;
 using Sitecore.Configuration;
 using Sitecore.Data.Items;
+using Sitecore.IO;
+using Sitecore.Security.Accounts;
+using Sitecore.Services.Infrastructure.Web.Http;
 using Sitecore.Workflows.Simple;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web;
-using Sitecore.IO;
-using Sitecore.Security.Accounts;
-using Sitecore.Workflows;
+using System.Text;
+using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace ExternalReviewers.Controllers
 {
-    
-    public class CommentsController : Controller
+
+    public class CommentsController : ServicesApiController
     {
-        [HttpGet]
-        public ActionResult Index()
+        [System.Web.Mvc.HttpGet]
+        public IHttpActionResult Index()
         {
             var response = new List<CommentsResponse>();
+            var jsonSettings = new JsonSerializerSettings();
 
-            var urlReferrer = Request.UrlReferrer?.PathAndQuery;
+            var urlReferrer = Request.RequestUri;
             var master = Factory.GetDatabase("master");
-            var rootItem = Sitecore.Context.Database.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", urlReferrer, '/'));
-          
-            if (rootItem == null) return Json(response, JsonRequestBehavior.AllowGet);
+            var rootItem = Sitecore.Context.Database.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", urlReferrer.PathAndQuery, '/'));
+
+            if (rootItem == null)
+            {
+                return new JsonResult<List<CommentsResponse>>(response, jsonSettings, Encoding.UTF8, this);
+            }
 
             var referencedItemId = rootItem["linked item id"];
             var currentItem = master.GetItem(referencedItemId);
             
             if (master.WorkflowProvider?.GetWorkflow(currentItem) == null)
             {
-                return Json(response, JsonRequestBehavior.AllowGet);
+                return new JsonResult<List<CommentsResponse>>(response, jsonSettings, Encoding.UTF8, this);
             }
 
             var workflowHistory = master.WorkflowProvider?.GetWorkflow(currentItem).GetHistory(currentItem);
-
-
+            
             foreach (var workflowEvent in workflowHistory)
             {
                 response.Add(new CommentsResponse
@@ -50,24 +54,31 @@ namespace ExternalReviewers.Controllers
                 });
             }
 
-            return Json(response.OrderBy(x => x.Date), JsonRequestBehavior.AllowGet);
+            response = response.OrderBy(x => x.Date).ToList();
+
+            return new JsonResult<List<CommentsResponse>>(response, jsonSettings, Encoding.UTF8, this);
         }
 
-        [HttpPost]
-        public ActionResult Index(Comment model)
+        [System.Web.Mvc.HttpPost]
+        public IHttpActionResult Index(Comment model)
         {
-            var urlReferrer = Request.UrlReferrer?.PathAndQuery;
+            var urlReferrer = Request.RequestUri;
             var master = Factory.GetDatabase("master");
-            var rootItem = Sitecore.Context.Database.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", urlReferrer, '/'));
+            var rootItem = Sitecore.Context.Database.GetItem(FileUtil.MakePath("/sitecore/system/External Reviews", urlReferrer.PathAndQuery, '/'));
 
-            if (rootItem == null) return Json(model, JsonRequestBehavior.AllowGet);
+            var jsonSettings = new JsonSerializerSettings();
+
+            if (rootItem == null)
+            {
+                return new JsonResult<Comment>(model, jsonSettings, Encoding.UTF8, this);
+            }
 
             var referencedItemId = rootItem["linked item id"];
             var currentItem = master.GetItem(referencedItemId);
 
             if (master.WorkflowProvider?.GetWorkflow(currentItem) == null)
             {
-                return Json(model, JsonRequestBehavior.AllowGet);
+                return new JsonResult<Comment>(model, jsonSettings, Encoding.UTF8, this);
             }
 
             if (currentItem.Database.WorkflowProvider is WorkflowProvider workflowProvider)
@@ -84,10 +95,9 @@ namespace ExternalReviewers.Controllers
                             {"Comments", model.Body}
                         });
                 }
-
             }
 
-            return Json(model, JsonRequestBehavior.AllowGet);
+            return new JsonResult<Comment>(model, jsonSettings, Encoding.UTF8, this);
         }
 
 
