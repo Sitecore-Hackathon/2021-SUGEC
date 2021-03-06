@@ -33,7 +33,6 @@ An agent was implemented to remove the expired links if there is no manual delet
 2. Publish Site
 	- Run a smart publish of the site
 	
-3. 
 
 ### Configuration
 ⟹ This module requires one additional step to have everything working.
