@@ -41,10 +41,10 @@ An agent was implemented to remove the expired links if there is no manual delet
 1. Locate /App_Config/Include/Feature/Fature.ExternalReviewers  
 2. Search for a setting named "Feature.ExternalReviewers.CDsHostname"
 3. Update the value with your CD hostname. In case you are running the application in a standalone environment, you can leave this value empty, it will default your site's hostname.
-``` 
+
 <settings> 
  	<setting name="Feature.ExternalReviewers.CDsHostname" value="" >
-<settings>```
+<settings>
 
 ## Usage instructions
 ⟹ For Administrators
