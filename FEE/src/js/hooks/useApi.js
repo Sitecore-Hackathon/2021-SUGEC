@@ -4,34 +4,36 @@ import Axios from 'axios';
 const useApi = url => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState(true);
 
-  const connection = useMemo(() => {
-    try {
-      // eslint-disable-next-line no-undef
-      return new signalR.HubConnectionBuilder().withUrl('/commentsHub').build();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  // const connection = useMemo(() => {
+  //   try {
+  //     // eslint-disable-next-line no-undef
+  //     return new signalR.HubConnectionBuilder()
+  //       .withUrl('/sitecore/signalr/commentsHub')
+  //       .build();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (connection) {
-      connection.on('ReceiveComment', (UserName, Body, Date, Location) => {
-        setComments([...comments, { UserName, Body, Date, Location }]);
-      });
+  // useEffect(() => {
+  //   if (connection) {
+  //     connection.on('ReceiveComment', (UserName, Body, Date, Location) => {
+  //       setComments([...comments, { UserName, Body, Date, Location }]);
+  //     });
 
-      connection
-        .start()
-        .then(() => {
-          setConnected(true);
-        })
-        .catch(err => {
-          return console.error(err.toString());
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //     connection
+  //       .start()
+  //       .then(() => {
+  //         setConnected(true);
+  //       })
+  //       .catch(err => {
+  //         return console.error(err.toString());
+  //       });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +51,7 @@ const useApi = url => {
     fetchData();
   }, [url]);
 
-  const postComment = async ({ UserName, Body }) => {
+  const postComment = async ({ UserName, Body, Location }) => {
     try {
       setLoading(true);
       const { data } = await Axios({
@@ -57,9 +59,12 @@ const useApi = url => {
         url,
         data: {
           UserName,
-          Body
+          Body,
+          Location
         }
       });
+      // Remove this line when signalR is connected
+      setComments([...comments, { ...data }]);
     } catch (error) {
       console.log(error);
     } finally {
